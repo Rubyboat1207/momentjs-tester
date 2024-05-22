@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Date Formatter</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
+    <style>
+        body {
+            font-family: 'Roboto Mono', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #61b2a7;
+            color: white;
+        }
+
+        body::after {
+            content: "";
+            background: url("https://momentjs.com/static/img/bg.png") 0 50%;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            z-index: -1;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            padding: 2em;
+            border-radius: 10px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .title {
+            font-size: 2.5em;
+            margin-bottom: 2em;
+            font-family: "Roboto", sans-serif;
+            font-weight: 100;
+            font-style: normal;
+        }
+
+        input {
+            margin: 0.5em 0;
+            padding: 0.5em;
+            font-size: 1em;
+            background: rgba(255, 255, 255, 0.3);
+            border: none;
+            border-radius: 5px;
+            color: white;
+        }
+
+        button {
+            padding: 0.5em 1em;
+            font-size: 1em;
+            margin-top: 1em;
+            background: rgba(255, 255, 255, 0.3);
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+            margin: 1em;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+        }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+
+        .icon {
+            font-size: 1em;
+            display: inline-block;
+            margin-left: 10px;
+        }
+
+        .valid {
+            color: #adffb0;
+        }
+
+        .invalid {
+            color: #ff786f;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="title">Moment.js Tester</h1>
+
+    <div class="container">
+        <h1 id="output">...</h1>
+        <label for="date">Enter Date:</label>
+        <input type="text" id="date" placeholder="e.g., 2024-05-22T14:30:00" onkeyup="formatDate()">
+        <br>
+        <label for="format">Enter Format (e.g., YYYY-MM-DD):</label>
+        <input type="text" id="format" placeholder="YYYY-MM-DD" onkeyup="formatDate()">
+        <br>
+        <label for="toggle">Validation Mode:</label>
+        <label class="switch">
+            <input type="checkbox" id="modeSwitch" onchange="formatDate()">
+            <span class="slider round"></span>
+        </label>
+        <br>
+        <button onclick="formatDate()">Reload</button>
+    </div>
+
+    <script>
+        function formatDate() {
+            const dateInput = document.getElementById('date').value;
+            const formatInput = document.getElementById('format').value;
+            const output = document.getElementById('output');
+            const modeSwitch = document.getElementById('modeSwitch').checked;
+
+            if (dateInput && formatInput) {
+                if (modeSwitch) {
+                    // Validation Mode
+                    const date = moment(dateInput, formatInput, true);
+                    if (date.isValid()) {
+                        output.innerHTML = 'Valid date format. <span class="icon valid">&#10004;</span>';
+                    } else {
+                        output.innerHTML = 'Invalid date format. <span class="icon invalid">&#10006;</span>';
+                    }
+                } else {
+                    // Preview Mode
+                    const formattedDate = moment(dateInput).format(formatInput);
+                    output.textContent = `${formattedDate}`;
+                }
+            } else {
+                output.textContent = 'Please enter both a date and a format.';
+            }
+        }
+    </script>
+</body>
+</html>
