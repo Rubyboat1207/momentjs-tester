@@ -172,9 +172,9 @@
                     // Validation Mode
                     const date = moment(dateInput, formatInput, true);
                     if (date.isValid()) {
-                        output.innerHTML = 'Valid date format. <span class="icon valid">&#10004;</span>';
+                        output.innerHTML = 'Date formats match! <span class="icon valid">&#10004;</span>';
                     } else {
-                        output.innerHTML = 'Invalid date format. <span class="icon invalid">&#10006;</span>';
+                        output.innerHTML = 'Date formats do not match. <span class="icon invalid">&#10006;</span>';
                     }
                 } else {
                     // Preview Mode
