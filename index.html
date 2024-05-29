@@ -146,7 +146,7 @@
     <div class="container">
         <h1 id="output">...</h1>
         <label for="date">Enter Date:</label>
-        <input type="text" id="date" placeholder="e.g., 2024-05-22T14:30:00" onkeyup="formatDate()">
+        <input type="text" id="date" onkeyup="formatDate()">
         <br>
         <label for="format">Enter Format (e.g., YYYY-MM-DD):</label>
         <input type="text" id="format" placeholder="YYYY-MM-DD" onkeyup="formatDate()">
@@ -172,7 +172,7 @@
                     // Validation Mode
                     const date = moment(dateInput, formatInput, true);
                     if (date.isValid()) {
-                        output.innerHTML = 'Date formats match! <span class="icon valid">&#10004;</span>';
+                        output.innerHTML = `Date formats match! <span class="icon valid">&#10004;</span><br/><span style="font-size: 0.4em;">${date}</span>`;
                     } else {
                         output.innerHTML = 'Date formats do not match. <span class="icon invalid">&#10006;</span>';
                     }
